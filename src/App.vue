@@ -1,27 +1,30 @@
 <template>
   <div id="app">
-    <input type="text" v-model="input.company_id"> <br>{{input.company_id}} <br>
-    <input type="text" v-model="input.company_name"> <br>{{input.company_name}} <br>
-    <input type="text" v-model="input.company_email"> <br>{{input.company_email}} <br>
-    <input type="text" v-model="input.company_phone"> <br>{{input.company_phone}} <br>
+    <project :projects="projects" @add-project="addNewProject"></project>
   </div>
 </template>
 
 <script>
+import Project from "@/components/Project";
 export default {
   name: "app",
   data() {
     return {
-      input: {
-        company_id: "",
-        company_name: "",
-        company_email: "",
-        company_phone: ""
-      }
+      projects: [{ nome: 'primo', criterio: 'max' }]
     };
   },
-  components: {}
-}
+  methods: {
+    addNewProject(new_project) {
+      return this.projects.push(new_project);
+    },
+    removeProject(project) {
+      return this.projects.splice(this.projects.indexOf(project), 1);
+    }
+  },
+  components: {
+    Project
+  }
+};
 </script>
 
 <style>
