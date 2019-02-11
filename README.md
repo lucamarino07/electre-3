@@ -1,4 +1,4 @@
-# electre-3
+# Electre-3 Luca Marino
 
 ## Project setup
 ```
