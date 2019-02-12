@@ -2,16 +2,67 @@
   <div id="app">
     <project :projects="projects" @add-project="addNewProject"></project>
     <hr>
+    <div class="container">
+      <project-card :projects="projects"></project-card>
+    </div>
   </div>
 </template>
 
 <script>
 import Project from "@/components/Project";
+import ProjectCard from "@/components/ProjectCard";
+
 export default {
   name: "app",
   data() {
     return {
-      projects: []
+      projects: [
+        {
+          nome: "Progetto 1",
+          criteri: [
+            {
+              nameCriterio: "Criterio 1",
+              valoreCriterio: 100,
+              tipoCriterio: "min"
+            },
+            {
+              nameCriterio: "Criterio 2",
+              valoreCriterio: 100,
+              tipoCriterio: "max"
+            }
+          ]
+        },
+        {
+          nome: "Progetto 2",
+          criteri: [
+            {
+              nameCriterio: "Criterio 1",
+              valoreCriterio: 100,
+              tipoCriterio: "min"
+            },
+            {
+              nameCriterio: "Criterio 2",
+              valoreCriterio: 100,
+              tipoCriterio: "max"
+            }
+          ]
+        },
+        {
+          nome: "Progetto 3",
+          criteri: [
+            {
+              nameCriterio: "Criterio 1",
+              valoreCriterio: 100,
+              tipoCriterio: "min"
+            },
+            {
+              nameCriterio: "Criterio 2",
+              valoreCriterio: 100,
+              tipoCriterio: "max"
+            }
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -23,7 +74,8 @@ export default {
     }
   },
   components: {
-    Project
+    Project,
+    ProjectCard
   }
 };
 </script>
