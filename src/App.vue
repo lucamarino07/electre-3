@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     addNewProject(new_project) {
+      console.log(new_project);
       return this.projects.push(new_project);
     },
     removeProject(project) {
