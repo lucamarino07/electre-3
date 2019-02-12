@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <h3>{{ error }}</h3>
+    <div class="alert alert-danger" role="alert" v-if="error">
+      <h3>
+        {{ error }}
+      </h3>
+    </div>
 
     <h1 v-for="(project,index) in projects" :key="index" :project="project">{{project.nome}}</h1>
 
@@ -49,7 +53,7 @@ export default {
           this.error = null;
         }
       } else {
-        this.error = "Inserire Progetto";
+        this.error = "I campi devono essere entrambi compilati!";
       }
     }
   }
