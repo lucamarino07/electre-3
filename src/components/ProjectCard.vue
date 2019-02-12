@@ -30,9 +30,8 @@
             <span
               class="badge badge-pill badge-success"
             >{{criterio.valoreCriterio}}</span>&nbsp;
+            <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>&nbsp;
             <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
-            &nbsp;
-            <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>
           </li>
         </ul>
       </div>

@@ -10,7 +10,7 @@
             <input id="nameCriterio" type="text" class="form-control" v-model="nameCriterio">
           </div>
           <div class="col-lg-2 col-sm-6 col-6 mt-4">
-            <label for="valoreCriterio">
+            <label for="valoreCriterio" class="text-success">
               <strong>Valore</strong>
             </label>
             <input
@@ -22,11 +22,11 @@
             >
           </div>
           <div class="col-lg-2 col-sm-6 col-6 mt-4">
-            <label for="valoreCriterio">
+            <label for="pesoCriterio" class="text-primary">
               <strong>Peso</strong>
             </label>
             <input
-              id="valoreCriterio"
+              id="pesoCriterio"
               type="number"
               step="0.01"
               class="form-control"
@@ -35,8 +35,8 @@
           </div>
 
           <div class="col-lg-2 col-sm-6 col-md-6 mt-4">
-            <label for="tipoCriterioProject">
-              <strong>Tipologia Criterio</strong>
+            <label for="tipoCriterioProject" class="text-danger">
+              <strong>Tipologia</strong>
             </label>
             <select id="tipoCriterioProject" class="form-control" v-model="tipoCriterio">
               <option>min</option>
@@ -44,7 +44,7 @@
             </select>
             <!-- <input id="tipoCriterioProject" type="text" class="form-control" v-model="tipoCriterio"> -->
           </div>
-          <div class="col-lg-2 col-sm-6 col-md-6 mt-4">
+          <div class="col-lg-2 col-12 mt-4">
             <label for="tipoCriterioProject">
               <strong>Inserisci</strong>
             </label>
