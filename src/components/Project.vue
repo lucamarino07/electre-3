@@ -13,6 +13,21 @@
       </div>
 
       <criterio @add-criterio="addNewCriterio"></criterio>
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item"
+          v-for="(criterio, index) in criteri"
+          :key="index"
+          :criterio="criterio"
+        >{{criterio.nameCriterio}}
+          &nbsp;
+          <span class="badge badge-pill badge-success">{{criterio.valoreCriterio}}</span>&nbsp;
+          <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
+          <button type="button" class="close no-outline" @click="removeCriterio(criterio)">
+            <span>&times;</span>
+          </button>
+        </li>
+      </ul>
       <br>
       <button type="submit" class="btn btn-sm btn-danger mt-4">Inserisci Progetto</button>
     </form>
@@ -61,6 +76,9 @@ export default {
     addNewCriterio(new_criterio) {
       console.log(new_criterio);
       return this.criteri.push(new_criterio);
+    },
+    removeCriterio(criterio) {
+      return this.criteri.splice(this.criteri.indexOf(criterio), 1);
     }
   }
 };

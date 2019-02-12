@@ -45,6 +45,7 @@
         </div>
       </div>
     </form>
+    <br>
     <strong>
       <p class="mt-2">{{error}}</p>
     </strong>

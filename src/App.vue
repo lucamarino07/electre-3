@@ -12,19 +12,19 @@
 </template>
 
 <script>
-import * as math from "mathjs";
-const matrix = math.matrix([
-  [6, 5, 6],
-  [7, 5, 4],
-  [6, 5, 4],
-  [4, 6, 4],
-  [7, 8, 7]
-]);
-console.log(matrix);
+// import * as math from "mathjs";
+// const matrix = math.matrix([
+//   [6, 5, 6],
+//   [7, 5, 4],
+//   [6, 5, 4],
+//   [4, 6, 4],
+//   [7, 8, 7]
+// ]);
+// console.log(matrix);
 
-console.log(math.square(matrix));
-console.log(matrix.subset(math.index([0, 4], 0)));
-console.log(math.sum(matrix.subset(math.index([0, 4], 0))));
+// console.log(math.square(matrix));
+// console.log(matrix.subset(math.index([0, 4], 0)));
+// console.log(math.sum(matrix.subset(math.index([0, 4], 0))));
 import Project from "@/components/Project";
 import ProjectCard from "@/components/ProjectCard";
 
