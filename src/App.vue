@@ -3,11 +3,9 @@
     <h1 class="title">Decision Making: TOPSIS</h1>
     <br>
     <project :projects="projects" @add-project="addNewProject"></project>
-    <button
-      type="submit"
-      class="btn btn-sm btn-outline-primary mt-4"
-      @click="getCriteri"
-    ><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Calcola Classifica</button>
+    <button type="submit" class="btn btn-sm btn-outline-primary mt-4" @click="getCriteri">
+      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Calcola Classifica
+    </button>
     <hr>
     <div class="container">
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
@@ -168,8 +166,8 @@ export default {
     },
     getCriteri() {
       var a = creaMatriceCriteri(this.projects); // prendo la matrice dei criteri
-      var pesi = creaMatricePesi(this.projects) // prendo la matrice dei pesi
-      var pesi_transpose = math.transpose(pesi)
+      var pesi = creaMatricePesi(this.projects); // prendo la matrice dei pesi
+      var pesi_transpose = math.transpose(pesi);
       var a_transpose = math.transpose(a); // creo la trasposta
       let a_square = math.square(a); // creo la matrice dei criteri quadrata
       let a_square_transpose = math.transpose(a_square); // creo la matrice trasposta dei criteri quadrata
@@ -180,10 +178,12 @@ export default {
         for (var j = 0; j < a_square_transpose[0].length; j++) {
           let denominatore = math.sum(a_square_transpose[i]); // calcolo il denomitatore
           // console.log(a_transpose[i][j] / (denominatore)**0.5)
-          normalized[i][j] = (a_transpose[i][j] / denominatore ** 0.5) * pesi_transpose[i][j] ; // calcolo la matrice normalizzata con il rapporto tra valore criterio e radice della somma al quadrato
+          normalized[i][j] =
+            (a_transpose[i][j] / denominatore ** 0.5) * pesi_transpose[i][j]; // calcolo la matrice normalizzata 
+            // con il rapporto tra valore criterio e radice della somma al quadrato
         }
       }
-      console.log(math.transpose(normalized));
+      console.log((normalized));
     }
   },
   components: {
