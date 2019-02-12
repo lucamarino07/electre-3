@@ -19,17 +19,20 @@
           v-for="(criterio, index) in criteri"
           :key="index"
           :criterio="criterio"
-        >{{criterio.nameCriterio}}
+        >
+          {{criterio.nameCriterio}}
           &nbsp;
-          <span class="badge badge-pill badge-success">{{criterio.valoreCriterio}}</span>&nbsp;
-          <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
+          <span
+            class="badge badge-pill badge-success"
+          >{{criterio.valoreCriterio}}</span>&nbsp;
+          <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>&nbsp;
+          <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>
           <button type="button" class="close no-outline" @click="removeCriterio(criterio)">
             <span>&times;</span>
           </button>
         </li>
       </ul>
-      <br>
-      <button type="submit" class="btn btn-sm btn-danger mt-4">Inserisci Progetto</button>
+      <button type="submit" class="btn btn-sm btn-danger">Inserisci Progetto</button>
     </form>
   </div>
 </template>

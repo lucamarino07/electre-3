@@ -8,13 +8,15 @@
       style="float: left"
     >
       <div class="card" style="width: 18rem;">
-        <div class="card-header">{{project.nome}}
-            <button 
-                    type="button" 
-                    class="close no-outline"
-                    @click="removeProject(project)">
-                    <span>&times;</span>
-                </button>
+        <div class="card-header">
+          {{project.nome}}
+          <button
+            type="button"
+            class="close no-outline"
+            @click="removeProject(project)"
+          >
+            <span>&times;</span>
+          </button>
         </div>
         <ul class="list-group list-group-flush">
           <li
@@ -23,15 +25,14 @@
             :key="index"
             :criterio="criterio"
           >
-            {{criterio.nameCriterio}} 
-             &nbsp;
+            {{criterio.nameCriterio}}
+            &nbsp;
             <span
               class="badge badge-pill badge-success"
             >{{criterio.valoreCriterio}}</span>&nbsp;
-            <span
-              class="badge badge-pill badge-danger"
-            >{{criterio.tipoCriterio}}</span>
-            
+            <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
+            &nbsp;
+            <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>
           </li>
         </ul>
       </div>
@@ -49,9 +50,9 @@ export default {
     }
   },
   methods: {
-      removeProject(project) {
-          this.$emit("remove-project", project)
-      }
+    removeProject(project) {
+      this.$emit("remove-project", project);
+    }
   }
 };
 </script>

@@ -1,3 +1,4 @@
+
 const projects = [
     {
         nome: "Progetto 1",
@@ -5,16 +6,19 @@ const projects = [
             {
                 nameCriterio: "Criterio 1",
                 valoreCriterio: 6,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 2",
                 valoreCriterio: 5,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 3",
                 valoreCriterio: 6,
+                pesoCriterio: 0.4,
                 tipoCriterio: "max"
             }
         ]
@@ -25,16 +29,19 @@ const projects = [
             {
                 nameCriterio: "Criterio 1",
                 valoreCriterio: 7,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 2",
                 valoreCriterio: 5,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 3",
                 valoreCriterio: 4,
+                pesoCriterio: 0.4,
                 tipoCriterio: "max"
             }
         ]
@@ -45,16 +52,19 @@ const projects = [
             {
                 nameCriterio: "Criterio 1",
                 valoreCriterio: 6,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 2",
                 valoreCriterio: 5,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 3",
                 valoreCriterio: 4,
+                pesoCriterio: 0.4,
                 tipoCriterio: "max"
             }
         ]
@@ -65,16 +75,19 @@ const projects = [
             {
                 nameCriterio: "Criterio 1",
                 valoreCriterio: 4,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 2",
                 valoreCriterio: 6,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 3",
                 valoreCriterio: 4,
+                pesoCriterio: 0.4,
                 tipoCriterio: "max"
             }
         ]
@@ -85,23 +98,24 @@ const projects = [
             {
                 nameCriterio: "Criterio 1",
                 valoreCriterio: 7,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 2",
                 valoreCriterio: 8,
+                pesoCriterio: 0.3,
                 tipoCriterio: "min"
             },
             {
                 nameCriterio: "Criterio 3",
                 valoreCriterio: 7,
+                pesoCriterio: 0.4,
                 tipoCriterio: "max"
             }
         ]
     }
 ]
-
-
 
 function getCriteriValue(projects) {
     var valori = []
@@ -125,16 +139,50 @@ function creaMatriceCriteri(projects) {
     var valori = getCriteriValue(projects);
     var matrix = [];
     var index = 0;
-    for(var i=0; i<projects.length; i++) {
+    for (var i = 0; i < projects.length; i++) {
         matrix[i] = [];
-        for(var j=0; j<projects[0]['criteri'].length; j++) {        
-            matrix[i][j] =  parseInt(valori[index]);
+        for (var j = 0; j < projects[0]['criteri'].length; j++) {
+            matrix[i][j] = parseInt(valori[index]);
             index = index + 1;
         }
     }
     return matrix
 }
 
+function getCriteriPesi(projects) {
+    var pesi = []
+    for (var i in projects) {
+        for (var j in projects[i]) {
+            if (j == "criteri") {
+                for (var k in projects[i][j]) {
+                    // console.log(projects[i][j][k]["valoreCriterio"]);
+                    pesi.push(projects[i][j][k]["pesoCriterio"])
+                }
+            }
+        }
+    }
+    return pesi
+}
 
 
-export { creaMatriceCriteri }
+function creaMatricePesi(projects) {
+    var pesi = getCriteriPesi(projects);
+    var matrix = [];
+    var index = 0;
+    for (var i = 0; i < projects.length; i++) {
+        matrix[i] = [];
+        for (var j = 0; j < projects[0]['criteri'].length; j++) {
+            matrix[i][j] = parseFloat(pesi[index]);
+            index = index + 1;
+        }
+    }
+    return matrix
+}
+// console.log(creaMatricePesi(projects))
+
+
+// matrix = creaMatriceCriteri(projects);
+// console.log((matrix));
+
+
+export { creaMatriceCriteri, creaMatricePesi }
