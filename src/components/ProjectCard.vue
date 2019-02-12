@@ -1,14 +1,21 @@
 <template>
-  <div class="container">
+  <div class="row justify-content-center">
     <div
-      class="mt-2 ml-2"
+      class="mx-2 my-2"
       v-for="(project, index) in projects"
       :key="index"
       :project="project"
       style="float: left"
     >
       <div class="card" style="width: 18rem;">
-        <div class="card-header">{{project.nome}}</div>
+        <div class="card-header">{{project.nome}}
+            <button 
+                    type="button" 
+                    class="close no-outline"
+                    @click="removeProject(project)">
+                    <span>&times;</span>
+                </button>
+        </div>
         <ul class="list-group list-group-flush">
           <li
             class="list-group-item"
@@ -24,6 +31,7 @@
             <span
               class="badge badge-pill badge-danger"
             >{{criterio.tipoCriterio}}</span>
+            
           </li>
         </ul>
       </div>
@@ -39,6 +47,11 @@ export default {
       type: Array,
       required: true
     }
+  },
+  methods: {
+      removeProject(project) {
+          this.$emit("remove-project", project)
+      }
   }
 };
 </script>
