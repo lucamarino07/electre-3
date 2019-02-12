@@ -17,7 +17,7 @@
             <input
               id="valoreCriterio"
               type="number"
-              step="any"
+              step="0.01"
               class="form-control"
               v-model="valoreCriterio"
             >

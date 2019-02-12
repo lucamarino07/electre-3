@@ -3,8 +3,8 @@
     <h1 class="title">Decision Making: TOPSIS</h1>
     <br>
     <project :projects="projects" @add-project="addNewProject"></project>
-    <button type="submit" class="btn btn-sm btn-outline-primary mt-4">Calcola Classifica</button>
-    <hr> 
+    <button type="submit" class="btn btn-sm btn-outline-primary mt-4" @click="getCriteri">Calcola Classifica</button>
+    <hr>
     <div class="container">
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
     </div>
@@ -27,6 +27,7 @@
 // console.log(math.sum(matrix.subset(math.index([0, 4], 0))));
 import Project from "@/components/Project";
 import ProjectCard from "@/components/ProjectCard";
+import { creaMatriceCriteri } from "./ciclo.js";
 
 export default {
   name: "app",
@@ -144,6 +145,10 @@ export default {
     removeProject(project) {
       // console.log(project);
       return this.projects.splice(this.projects.indexOf(project), 1);
+    },
+    getCriteri() {
+      var a = creaMatriceCriteri(this.projects);
+      console.log(a)
     }
   },
   components: {
