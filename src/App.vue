@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <project :projects="projects" @add-project="addNewProject"></project>
+    <hr>
   </div>
 </template>
 
@@ -10,7 +11,7 @@ export default {
   name: "app",
   data() {
     return {
-      projects: [{ nome: 'primo', criterio: 'max' }]
+      projects: []
     };
   },
   methods: {
