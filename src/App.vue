@@ -29,7 +29,11 @@
 // console.log(math.sum(matrix.subset(math.index([0, 4], 0))));
 import Project from "@/components/Project";
 import ProjectCard from "@/components/ProjectCard";
-import { creaMatriceCriteri, creaMatricePesi } from "./ciclo.js";
+import {
+  creaMatriceCriteri,
+  creaMatricePesi,
+  creaMatriceTipo
+} from "./ciclo.js";
 import * as math from "mathjs";
 
 export default {
@@ -167,6 +171,8 @@ export default {
     getCriteri() {
       var a = creaMatriceCriteri(this.projects); // prendo la matrice dei criteri
       var pesi = creaMatricePesi(this.projects); // prendo la matrice dei pesi
+      var tipi = creaMatriceTipo(this.projects);
+      var tipi_transpose = math.transpose(tipi);
       var pesi_transpose = math.transpose(pesi);
       var a_transpose = math.transpose(a); // creo la trasposta
       let a_square = math.square(a); // creo la matrice dei criteri quadrata
@@ -179,11 +185,34 @@ export default {
           let denominatore = math.sum(a_square_transpose[i]); // calcolo il denomitatore
           // console.log(a_transpose[i][j] / (denominatore)**0.5)
           normalized[i][j] =
-            (a_transpose[i][j] / denominatore ** 0.5) * pesi_transpose[i][j]; // calcolo la matrice normalizzata 
-            // con il rapporto tra valore criterio e radice della somma al quadrato
+            (a_transpose[i][j] / denominatore ** 0.5) * pesi_transpose[i][j]; // calcolo la matrice normalizzata
+          // con il rapporto tra valore criterio e radice della somma al quadrato
         }
       }
-      console.log((normalized));
+
+      var ideal_best = [];
+      var ideal_not_best = [];
+      for (var i = 0; i < normalized.length; i++) {
+        for (var j = 0; j < normalized[0].length; j++) {
+          if (tipi_transpose[i][j] == "min") {
+            let point_best = math.min(normalized[i]);
+            let point_not_best = math.max(normalized[i]);
+            ideal_best.push(point_best);
+            ideal_not_best.push(point_not_best);
+            break;
+          } else {
+            let point_best = math.max(normalized[i]);
+            let point_not_best = math.min(normalized[i]);
+            ideal_best.push(point_best);
+            ideal_not_best.push(point_not_best);
+            break;
+          }
+        }
+      }
+
+      
+
+
     }
   },
   components: {

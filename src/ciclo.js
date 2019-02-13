@@ -185,4 +185,38 @@ function creaMatricePesi(projects) {
 // console.log((matrix));
 
 
-export { creaMatriceCriteri, creaMatricePesi }
+
+
+function getCriteriTipo(projects) {
+    var tipi = []
+    for (var i in projects) {
+        for (var j in projects[i]) {
+            if (j == "criteri") {
+                for (var k in projects[i][j]) {
+                    // console.log(projects[i][j][k]["valoreCriterio"]);
+                    tipi.push(projects[i][j][k]["tipoCriterio"])
+                }
+            }
+        }
+    }
+    return tipi
+}
+
+
+
+function creaMatriceTipo(projects) {
+    var tipi = getCriteriTipo(projects);
+    var matrix = [];
+    var index = 0;
+    for (var i = 0; i < projects.length; i++) {
+        matrix[i] = [];
+        for (var j = 0; j < projects[0]['criteri'].length; j++) {
+            matrix[i][j] = (tipi[index]);
+            index = index + 1;
+        }
+    }
+    return matrix
+}
+// console.log(creaMatriceTipo(projects))
+
+export { creaMatriceCriteri, creaMatricePesi, creaMatriceTipo }
