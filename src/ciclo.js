@@ -142,7 +142,7 @@ function creaMatriceCriteri(projects) {
     for (var i = 0; i < projects.length; i++) {
         matrix[i] = [];
         for (var j = 0; j < projects[0]['criteri'].length; j++) {
-            matrix[i][j] = parseInt(valori[index]);
+            matrix[i][j] = parseFloat(valori[index]);
             index = index + 1;
         }
     }
