@@ -10,6 +10,10 @@
     <div class="container">
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
     </div>
+    <hr>
+    <div class="container">
+      <ranking :ranking="ranking" @svuota-ranking="svuotaRanking"></ranking>
+    </div>
   </div>
 </template>
 
@@ -29,6 +33,7 @@
 // console.log(math.sum(matrix.subset(math.index([0, 4], 0))));
 import Project from "@/components/Project";
 import ProjectCard from "@/components/ProjectCard";
+import Ranking from "@/components/Ranking";
 import {
   creaMatriceCriteri,
   creaMatricePesi,
@@ -40,25 +45,26 @@ export default {
   name: "app",
   data() {
     return {
+      ranking: [],
       projects: [
         {
           nome: "Progetto 1",
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 6,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
+              valoreCriterio: 15,
+              pesoCriterio: 0.4,
+              tipoCriterio: "max"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 5,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
+              valoreCriterio: 50,
+              pesoCriterio: 0.2,
+              tipoCriterio: "max"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 6,
+              valoreCriterio: 0.6,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -69,19 +75,19 @@ export default {
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 7,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
+              valoreCriterio: 10,
+              pesoCriterio: 0.4,
+              tipoCriterio: "max"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 5,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
+              valoreCriterio: 45,
+              pesoCriterio: 0.2,
+              tipoCriterio: "max"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 4,
+              valoreCriterio: 0.45,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -92,19 +98,19 @@ export default {
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 6,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
+              valoreCriterio: 20,
+              pesoCriterio: 0.4,
+              tipoCriterio: "max"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 5,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
+              valoreCriterio: 35,
+              pesoCriterio: 0.2,
+              tipoCriterio: "max"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 4,
+              valoreCriterio: 0.5,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -115,42 +121,19 @@ export default {
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 4,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
-            },
-            {
-              nameCriterio: "Criterio 2",
-              valoreCriterio: 6,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
-            },
-            {
-              nameCriterio: "Criterio 3",
-              valoreCriterio: 4,
+              valoreCriterio: 5,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
-            }
-          ]
-        },
-        {
-          nome: "Progetto 5",
-          criteri: [
-            {
-              nameCriterio: "Criterio 1",
-              valoreCriterio: 7,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 8,
-              pesoCriterio: 0.3,
-              tipoCriterio: "min"
+              valoreCriterio: 60,
+              pesoCriterio: 0.2,
+              tipoCriterio: "max"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 7,
+              valoreCriterio: 0.6,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -160,6 +143,9 @@ export default {
     };
   },
   methods: {
+    svuotaRanking() {
+      this.ranking = [];
+    },
     addNewProject(new_project) {
       // console.log(new_project);
       return this.projects.push(new_project);
@@ -168,6 +154,7 @@ export default {
       // console.log(project);
       return this.projects.splice(this.projects.indexOf(project), 1);
     },
+
     getCriteri() {
       var a = creaMatriceCriteri(this.projects); // prendo la matrice dei criteri
       var pesi = creaMatricePesi(this.projects); // prendo la matrice dei pesi
@@ -189,6 +176,8 @@ export default {
           // con il rapporto tra valore criterio e radice della somma al quadrato
         }
       }
+
+      console.log(a)
 
       var ideal_best = [];
       var ideal_not_best = [];
@@ -212,12 +201,48 @@ export default {
 
       
 
+      var normalized_transpose = math.transpose(normalized);
 
+      var s_plus_difference = [];
+      var s_negative_difference = [];
+      for (var i = 0; i < normalized_transpose.length; i++) {
+        s_plus_difference[i] = [];
+        s_negative_difference[i] = [];
+        for (var j = 0; j < normalized_transpose[0].length; j++) {
+          s_plus_difference[i][j] =
+            (normalized_transpose[i][j] - ideal_best[j]) ** 2;
+          s_negative_difference[i][j] =
+            (normalized_transpose[i][j] - ideal_not_best[j]) ** 2;
+        }
+      }
+      
+
+
+      var s_plus = [];
+      var s_negative = [];
+      var c_star = [];
+      for (var i = 0; i < s_plus_difference.length; i++) {
+        s_plus[i] = math.sum(s_plus_difference[i]) ** 0.5;
+        s_negative[i] = math.sum(s_negative_difference[i]) ** 0.5;
+        c_star[i] = s_negative[i] / (s_negative[i] + s_plus[i]);
+      }
+
+
+
+      var rank = [];
+      for (var i = 0; i < s_plus_difference.length; i++) {
+        var obj = {
+          progetto: this.projects[i]['nome'],
+          valore: Math.round(c_star[i] * 100) / 100
+        }
+        this.ranking.push(obj)
+      }
     }
   },
   components: {
     Project,
-    ProjectCard
+    ProjectCard,
+    Ranking
   }
 };
 </script>
