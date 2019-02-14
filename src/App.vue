@@ -3,41 +3,41 @@
     <h1 class="title">Decision Making: TOPSIS</h1>
     <br>
     <project :projects="projects" @add-project="addNewProject"></project>
-    <button type="submit" class="btn btn-sm btn-outline-primary mt-4" @click="getCriteri">
+    <button type="submit" class="btn btn-sm btn-primary mt-4" @click="changeMostra">Progetti
+      <strong v-if="mostra == false">+</strong>
+      <strong v-else>-</strong>
+    </button>
+    <button type="submit" class="btn btn-sm btn-info mt-4 ml-2" @click="getCriteri">
       <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Calcola Classifica
     </button>
-    <hr>
-    <div class="container">
+    <button
+      type="submit"
+      class="btn btn-sm btn-warning mt-4 ml-2"
+      @click="changemostraCLassifica"
+    >Classifica <strong v-if="mostraCLassifica == false">+</strong>
+      <strong v-else>-</strong></button>
+
+    <div class="container" v-if="mostra">
+      <hr>
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
     </div>
-    <hr>
-    <div class="container">
+
+    <div class="container" v-if="mostraCLassifica">
+      <hr>
       <ranking :ranking="ranking" @svuota-ranking="svuotaRanking"></ranking>
     </div>
   </div>
 </template>
 
 <script>
-// import * as math from "mathjs";
-// const matrix = math.matrix([
-//   [6, 5, 6],
-//   [7, 5, 4],
-//   [6, 5, 4],
-//   [4, 6, 4],
-//   [7, 8, 7]
-// ]);
-// console.log(matrix);
-
-// console.log(math.square(matrix));
-// console.log(matrix.subset(math.index([0, 4], 0)));
-// console.log(math.sum(matrix.subset(math.index([0, 4], 0))));
 import Project from "@/components/Project";
 import ProjectCard from "@/components/ProjectCard";
 import Ranking from "@/components/Ranking";
 import {
   creaMatriceCriteri,
   creaMatricePesi,
-  creaMatriceTipo
+  creaMatriceTipo,
+  ciccio
 } from "./ciclo.js";
 import * as math from "mathjs";
 
@@ -45,6 +45,8 @@ export default {
   name: "app",
   data() {
     return {
+      mostra: false,
+      mostraCLassifica: false,
       ranking: [],
       projects: [
         {
@@ -52,19 +54,19 @@ export default {
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 15,
-              pesoCriterio: 0.4,
-              tipoCriterio: "max"
+              valoreCriterio: 6,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 50,
-              pesoCriterio: 0.2,
-              tipoCriterio: "max"
+              valoreCriterio: 5,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 0.6,
+              valoreCriterio: 6,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -75,19 +77,19 @@ export default {
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 10,
-              pesoCriterio: 0.4,
-              tipoCriterio: "max"
+              valoreCriterio: 7,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 45,
-              pesoCriterio: 0.2,
-              tipoCriterio: "max"
+              valoreCriterio: 5,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 0.45,
+              valoreCriterio: 4,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -98,19 +100,19 @@ export default {
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 20,
-              pesoCriterio: 0.4,
-              tipoCriterio: "max"
+              valoreCriterio: 6,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 35,
-              pesoCriterio: 0.2,
-              tipoCriterio: "max"
+              valoreCriterio: 5,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 0.5,
+              valoreCriterio: 4,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -121,19 +123,42 @@ export default {
           criteri: [
             {
               nameCriterio: "Criterio 1",
-              valoreCriterio: 5,
-              pesoCriterio: 0.4,
-              tipoCriterio: "max"
+              valoreCriterio: 4,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 2",
-              valoreCriterio: 60,
-              pesoCriterio: 0.2,
-              tipoCriterio: "max"
+              valoreCriterio: 6,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
             },
             {
               nameCriterio: "Criterio 3",
-              valoreCriterio: 0.6,
+              valoreCriterio: 4,
+              pesoCriterio: 0.4,
+              tipoCriterio: "max"
+            }
+          ]
+        },
+        {
+          nome: "Progetto 5",
+          criteri: [
+            {
+              nameCriterio: "Criterio 1",
+              valoreCriterio: 7,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
+            },
+            {
+              nameCriterio: "Criterio 2",
+              valoreCriterio: 8,
+              pesoCriterio: 0.3,
+              tipoCriterio: "min"
+            },
+            {
+              nameCriterio: "Criterio 3",
+              valoreCriterio: 7,
               pesoCriterio: 0.4,
               tipoCriterio: "max"
             }
@@ -142,7 +167,16 @@ export default {
       ]
     };
   },
+  mounted() {
+    ciccio()
+  },
   methods: {
+    changemostraCLassifica() {
+      return (this.mostraCLassifica = !this.mostraCLassifica);
+    },
+    changeMostra() {
+      return (this.mostra = !this.mostra);
+    },
     svuotaRanking() {
       this.ranking = [];
     },
@@ -177,7 +211,7 @@ export default {
         }
       }
 
-      console.log(a)
+      console.log(a);
 
       var ideal_best = [];
       var ideal_not_best = [];
@@ -199,8 +233,6 @@ export default {
         }
       }
 
-      
-
       var normalized_transpose = math.transpose(normalized);
 
       var s_plus_difference = [];
@@ -215,8 +247,6 @@ export default {
             (normalized_transpose[i][j] - ideal_not_best[j]) ** 2;
         }
       }
-      
-
 
       var s_plus = [];
       var s_negative = [];
@@ -227,16 +257,16 @@ export default {
         c_star[i] = s_negative[i] / (s_negative[i] + s_plus[i]);
       }
 
-
-
+      this.ranking = [];
       var rank = [];
       for (var i = 0; i < s_plus_difference.length; i++) {
         var obj = {
-          progetto: this.projects[i]['nome'],
+          progetto: this.projects[i]["nome"],
           valore: Math.round(c_star[i] * 100) / 100
-        }
-        this.ranking.push(obj)
+        };
+        this.ranking.push(obj);
       }
+      return (this.mostraCLassifica = true);
     }
   },
   components: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center">
+  <div class="cardLuca">
     <div
       class="mx-2 my-2"
       v-for="(project, index) in projects"
@@ -57,4 +57,9 @@ export default {
 </script>
 
 <style>
+.cardLuca {
+  overflow: hidden;
+  width: 912px;
+  margin: 0 auto;
+}
 </style>

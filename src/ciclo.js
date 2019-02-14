@@ -1,4 +1,6 @@
 
+import math from 'mathjs';
+
 const projects = [
     {
         nome: "Progetto 1",
@@ -217,6 +219,10 @@ function creaMatriceTipo(projects) {
     }
     return matrix
 }
+
+function ciccio() {
+    console.log(math.matr)
+}
 // console.log(creaMatriceTipo(projects))
 
-export { creaMatriceCriteri, creaMatricePesi, creaMatriceTipo }
+export { creaMatriceCriteri, creaMatricePesi, creaMatriceTipo, ciccio }
