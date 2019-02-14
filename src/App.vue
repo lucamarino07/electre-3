@@ -2,20 +2,45 @@
   <div id="app">
     <h1 class="title">Decision Making: TOPSIS</h1>
     <br>
-    <project :projects="projects" @add-project="addNewProject"></project>
-    <button type="submit" class="btn btn-sm btn-primary mt-4" @click="changeMostra">Progetti
+
+    <div class="container">
+      <criterio-insert @add-criterio-vector="addCriterioVector"></criterio-insert>
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item"
+          v-for="(criterio, index) in criteriStart"
+          :key="index"
+          :criterio="criterio"
+        >
+          {{criterio.nameCriterio}}
+          &nbsp;
+          <span
+            class="badge badge-pill badge-success"
+          >{{criterio.valoreCriterio}}</span>&nbsp;
+          <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>&nbsp;
+          <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>&nbsp;
+          
+          <button type="button" class="close no-outline" @click="removeCriterio(criterio)">
+            <span>&times;</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <hr>
+    <project :projects="projects" :criteriStart="criteriStart" @add-project="addNewProject"></project>
+    <button type="submit" class="btn btn-sm btn-primary mt-4" @click="changeMostra">
+      Progetti
       <strong v-if="mostra == false">+</strong>
       <strong v-else>-</strong>
     </button>
     <button type="submit" class="btn btn-sm btn-info mt-4 ml-2" @click="getCriteri">
       <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Calcola Classifica
     </button>
-    <button
-      type="submit"
-      class="btn btn-sm btn-warning mt-4 ml-2"
-      @click="changemostraCLassifica"
-    >Classifica <strong v-if="mostraCLassifica == false">+</strong>
-      <strong v-else>-</strong></button>
+    <button type="submit" class="btn btn-sm btn-warning mt-4 ml-2" @click="changemostraCLassifica">
+      Classifica
+      <strong v-if="mostraCLassifica == false">+</strong>
+      <strong v-else>-</strong>
+    </button>
 
     <div class="container" v-if="mostra">
       <hr>
@@ -33,6 +58,8 @@
 import Project from "@/components/Project";
 import ProjectCard from "@/components/ProjectCard";
 import Ranking from "@/components/Ranking";
+import CriterioInsert from "@/components/CriterioInsert";
+
 import {
   creaMatriceCriteri,
   creaMatricePesi,
@@ -45,6 +72,7 @@ export default {
   name: "app",
   data() {
     return {
+      criteriStart: [],
       mostra: false,
       mostraCLassifica: false,
       ranking: [],
@@ -168,7 +196,7 @@ export default {
     };
   },
   mounted() {
-    ciccio()
+    ciccio();
   },
   methods: {
     changemostraCLassifica() {
@@ -267,12 +295,16 @@ export default {
         this.ranking.push(obj);
       }
       return (this.mostraCLassifica = true);
+    },
+    addCriterioVector(criterio) {
+      return this.criteriStart.push(criterio);
     }
   },
   components: {
     Project,
     ProjectCard,
-    Ranking
+    Ranking,
+    CriterioInsert
   }
 };
 </script>

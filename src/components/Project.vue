@@ -12,7 +12,7 @@
         <input id="nameProject" type="text" class="form-control" v-model="nome">
       </div>
 
-      <criterio @add-criterio="addNewCriterio"></criterio>
+      <criterio @add-criterio="addNewCriterio" :criteriStart = "criteriStart"></criterio>
       <ul class="list-group list-group-flush">
         <li
           class="list-group-item"
@@ -48,6 +48,10 @@ export default {
   },
   props: {
     projects: {
+      type: Array,
+      required: true
+    },
+    criteriStart: {
       type: Array,
       required: true
     }

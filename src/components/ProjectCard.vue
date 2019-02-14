@@ -1,5 +1,5 @@
 <template>
-  <div class="cardLuca">
+  <div class="row justify-content-center">
     <div
       class="mx-2 my-2"
       v-for="(project, index) in projects"

@@ -221,7 +221,7 @@ function creaMatriceTipo(projects) {
 }
 
 function ciccio() {
-    console.log(math.matr)
+    console.log(math)
 }
 // console.log(creaMatriceTipo(projects))
 

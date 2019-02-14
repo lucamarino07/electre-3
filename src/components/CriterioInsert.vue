@@ -3,30 +3,14 @@
     <form @submit.prevent="submitCriterio" class>
       <div class="container">
         <div class="row">
-          <div class="col-lg-4 col-sm-6 col-12 mt-4">
+          <div class="col-lg-6 col-sm-6 col-12 mt-4">
             <label for="nameCriterio">
               <strong>Criterio</strong>
             </label>
-            <select id="nameCriterio" class="form-control" v-model="nameCriterio">
-              <option
-                v-for="(criterioStart, index) in criteriStart"
-                :key="index"
-              >{{criterioStart.nameCriterio}}</option>
-            </select>
+            <input id="nameCriterio" type="text" class="form-control" v-model="nameCriterio">
           </div>
-          <div class="col-lg-2 col-sm-6 col-6 mt-4">
-            <label for="valoreCriterio" class="text-success">
-              <strong>Valore</strong>
-            </label>
-            <input
-              id="valoreCriterio"
-              type="number"
-              step="0.01"
-              class="form-control"
-              v-model="valoreCriterio"
-            >
-          </div>
-          <div class="col-lg-2 col-sm-6 col-6 mt-4">
+
+          <div class="col-lg-2 col-sm-12 col-612 mt-4">
             <label for="pesoCriterio" class="text-primary">
               <strong>Peso</strong>
             </label>
@@ -70,43 +54,24 @@
 <script>
 export default {
   name: "Criterio",
-  props: {
-    criteriStart: {
-      type: Array,
-      required: true
-    }
-  },
   data() {
     return {
       nameCriterio: null,
       pesoCriterio: null,
       tipoCriterio: null,
-      valoreCriterio: null,
       error: null
     };
   },
-  mounted() {
-    //   console.log(this.criteriStart)
-  },
-  watch: {
-      nameCriterio(newQuestion, oldQuestion){
-          console.log("criteriStart", newQuestion, this.criteriStart)
-          this.pesoCriterio = this.criteriStart.find(obj => obj.nameCriterio === newQuestion).pesoCriterio;
-          this.tipoCriterio = this.criteriStart.find(obj => obj.nameCriterio === newQuestion).tipoCriterio;
-      }
-  },
   methods: {
     submitCriterio() {
-      if (this.nameCriterio && this.valoreCriterio) {
-        this.$emit("add-criterio", {
+      if (this.nameCriterio) {
+        this.$emit("add-criterio-vector", {
           nameCriterio: this.nameCriterio,
-          valoreCriterio: this.valoreCriterio,
           pesoCriterio: this.pesoCriterio,
           tipoCriterio: this.tipoCriterio
         });
 
         this.nameCriterio = null;
-        this.valoreCriterio = null;
         this.pesoCriterio = null;
         this.tipoCriterio = null;
 
@@ -114,7 +79,7 @@ export default {
           this.error = null;
         }
       } else {
-        this.error = "Compilare tutti i campi per l'inserimento del criterio!";
+        this.error = "Inserire il nome del criterio!";
       }
     }
   }
