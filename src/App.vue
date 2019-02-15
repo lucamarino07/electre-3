@@ -3,7 +3,7 @@
     <h1 class="title">Decision Making: TOPSIS</h1>
     <br>
 
-    <div class="container">
+    <div class="container card">
       <criterio-insert @add-criterio-vector="addCriterioVector"></criterio-insert>
       <ul class="list-group list-group-flush">
         <li
@@ -18,16 +18,20 @@
             class="badge badge-pill badge-success"
           >{{criterio.valoreCriterio}}</span>&nbsp;
           <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>&nbsp;
-          <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>&nbsp;
-          
-          <button type="button" class="close no-outline" @click="removeCriterio(criterio)">
+          <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
+          &nbsp;
+          <button
+            type="button"
+            class="close no-outline"
+            @click="removeCriterioStart(criterio)"
+          >
             <span>&times;</span>
           </button>
         </li>
       </ul>
     </div>
-    <hr>
-    <project :projects="projects" :criteriStart="criteriStart" @add-project="addNewProject"></project>
+    <br>
+    <project :projects="projects" :criteriStart="criteriStart" @add-project="addNewProject" class="card"></project>
     <button type="submit" class="btn btn-sm btn-primary mt-4" @click="changeMostra">
       Progetti
       <strong v-if="mostra == false">+</strong>
@@ -298,6 +302,10 @@ export default {
     },
     addCriterioVector(criterio) {
       return this.criteriStart.push(criterio);
+    },
+    removeCriterioStart(criterio) {
+      // console.log(project);
+      return this.criteriStart.splice(this.criteriStart.indexOf(criterio), 1);
     }
   },
   components: {

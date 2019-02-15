@@ -4,7 +4,7 @@
       <h3>{{ error }}</h3>
     </div>
 
-    <form @submit.prevent="submitProject">
+    <form @submit.prevent="submitProject" class="mt-2 mb-2">
       <div class="col-12">
         <label for="nameProject">
           <strong>Nome Progetto</strong>
