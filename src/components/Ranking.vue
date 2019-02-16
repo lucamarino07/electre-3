@@ -6,6 +6,7 @@
       class="myTable"
       :sort-by="sort"
       :sort-desc="direction"
+      v-if="ranking.length > 0"
     >
       <template slot="index" slot-scope="data">{{data.index + 1}}</template>
     </b-table>
@@ -22,40 +23,40 @@
 
 <script>
 export default {
-  name: "Ranking",
+  name: 'Ranking',
   props: {
     ranking: {
       type: Array,
       required: true
     }
   },
-  data() {
+  data () {
     return {
-      sort: "valore",
+      sort: 'valore',
       direction: true,
       fields: [
         {
-          key: "index",
-          label: "#",
+          key: 'index',
+          label: '#',
           tdClass: 'font-weight-bold'
         },
         {
-          key: "progetto",
+          key: 'progetto',
           sortable: false
         },
         {
-          key: "valore",
+          key: 'valore',
           sortable: false
         }
       ]
-    };
+    }
   },
   methods: {
-    svuotaRanking() {
-      this.$emit("svuota-ranking");
+    svuotaRanking () {
+      this.$emit('svuota-ranking')
     }
   }
-};
+}
 </script>
 
 <style>
@@ -64,6 +65,3 @@ export default {
   color: white;
 }
 </style>
-
-
-

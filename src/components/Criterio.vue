@@ -3,7 +3,7 @@
     <form @submit.prevent="submitCriterio" class>
       <div class="container">
         <div class="row">
-          <div class="col-lg-4 col-sm-6 col-12 mt-4">
+          <div class="col-lg-4 col-sm-6 col-6 mt-4">
             <label for="nameCriterio">
               <strong>Criterio</strong>
             </label>
@@ -26,7 +26,7 @@
               v-model="valoreCriterio"
             >
           </div>
-          <div class="col-lg-2 col-sm-6 col-6 mt-4">
+          <div class="col-lg-2 col-sm-6 col-4 mt-4">
             <label for="pesoCriterio" class="text-primary">
               <strong>Peso</strong>
             </label>
@@ -36,10 +36,12 @@
               step="0.01"
               class="form-control"
               v-model="pesoCriterio"
+              min="0"
+              max="1"
             >
           </div>
 
-          <div class="col-lg-2 col-sm-6 col-md-6 mt-4">
+          <div class="col-lg-2 col-sm-6 col-4 mt-4">
             <label for="tipoCriterioProject" class="text-danger">
               <strong>Tipologia</strong>
             </label>
@@ -48,7 +50,7 @@
               <option>max</option>
             </select>
           </div>
-          <div class="col-lg-2 col-12 mt-4">
+          <div class="col-lg-2 col-4 mt-4">
             <label for="tipoCriterioProject">
               <strong>Inserisci</strong>
             </label>
@@ -89,11 +91,15 @@ export default {
     //   console.log(this.criteriStart)
   },
   watch: {
-      nameCriterio(newQuestion, oldQuestion){
-          console.log("criteriStart", newQuestion, this.criteriStart)
-          this.pesoCriterio = this.criteriStart.find(obj => obj.nameCriterio === newQuestion).pesoCriterio;
-          this.tipoCriterio = this.criteriStart.find(obj => obj.nameCriterio === newQuestion).tipoCriterio;
-      }
+    nameCriterio(newQuestion, oldQuestion) {
+      console.log("criteriStart", newQuestion, this.criteriStart);
+      this.pesoCriterio = this.criteriStart.find(
+        obj => obj.nameCriterio === newQuestion
+      ).pesoCriterio;
+      this.tipoCriterio = this.criteriStart.find(
+        obj => obj.nameCriterio === newQuestion
+      ).tipoCriterio;
+    }
   },
   methods: {
     submitCriterio() {
@@ -123,5 +129,3 @@ export default {
 
 <style>
 </style>
-
-

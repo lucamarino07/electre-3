@@ -1,59 +1,98 @@
 <template>
   <div id="app">
-    <h1 class="title">Decision Making: TOPSIS</h1>
-    <br>
+    <div class="container">
+      <h1 class="title">TOPSIS (Demo)</h1>
+      <p>Inserisci i tuoi criteri e le alternative da valutare! L'algoritmo seleziona per te la migliore alternativa!</p>
+      <p>(Vi sono già 5 alternative di partenza, puoi usarle per testare l'algoritmo o cancellarle ed inserire le tue)</p>
+    </div>
 
-    <div class="container card">
-      <criterio-insert @add-criterio-vector="addCriterioVector"></criterio-insert>
-      <ul class="list-group list-group-flush">
-        <li
-          class="list-group-item"
-          v-for="(criterio, index) in criteriStart"
-          :key="index"
-          :criterio="criterio"
-        >
-          {{criterio.nameCriterio}}
-          &nbsp;
-          <span
-            class="badge badge-pill badge-success"
-          >{{criterio.valoreCriterio}}</span>&nbsp;
-          <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>&nbsp;
-          <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
-          &nbsp;
-          <button
-            type="button"
-            class="close no-outline"
-            @click="removeCriterioStart(criterio)"
-          >
-            <span>&times;</span>
+    <div class="container">
+      <div class="card">
+        <div class="card-header bg-success">
+          <button type="button" class="btn no-outline" @click="changemostraInserimentoCriteri">
+            <strong v-if="mostraInserimentoCriteri == true" class="text-white">Chiudi</strong>
+            <strong v-else-if="criteriStart.length > 0" class="text-white">Elenco Criteri</strong>
+            <strong v-else class="text-white">Inserisci Criteri</strong>
           </button>
-        </li>
-      </ul>
+        </div>
+        <div class="card-body" v-if="mostraInserimentoCriteri">
+          <criterio-insert @add-criterio-vector="addCriterioVector"></criterio-insert>
+        </div>
+
+        <ul class="list-group list-group-flush">
+          <li
+            class="list-group-item"
+            v-for="(criterio, index) in criteriStart"
+            :key="index"
+            :criterio="criterio"
+          >
+            {{criterio.nameCriterio}}
+            &nbsp;
+            <span
+              class="badge badge-pill badge-success"
+            >{{criterio.valoreCriterio}}</span>&nbsp;
+            <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>&nbsp;
+            <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
+            &nbsp;
+            <button
+              type="button"
+              class="close no-outline"
+              @click="removeCriterioStart(criterio)"
+            >
+              <span>&times;</span>
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
     <br>
-    <project :projects="projects" :criteriStart="criteriStart" @add-project="addNewProject" class="card"></project>
-    <button type="submit" class="btn btn-sm btn-primary mt-4" @click="changeMostra">
-      Progetti
-      <strong v-if="mostra == false">+</strong>
-      <strong v-else>-</strong>
-    </button>
-    <button type="submit" class="btn btn-sm btn-info mt-4 ml-2" @click="getCriteri">
-      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Calcola Classifica
-    </button>
-    <button type="submit" class="btn btn-sm btn-warning mt-4 ml-2" @click="changemostraCLassifica">
-      Classifica
-      <strong v-if="mostraCLassifica == false">+</strong>
-      <strong v-else>-</strong>
-    </button>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-header bg-danger">
+          <button type="button" class="btn no-outline" @click="changemostraInserimentoProgetti">
+            <strong v-if="mostraInserimentoProgetti == true" class="text-white">Chiudi</strong>
+            <strong v-else class="text-white">Inserisci Progetti</strong>
+          </button>
+        </div>
+        <div class="card-body" v-if="mostraInserimentoProgetti">
+          <project :projects="projects" :criteriStart="criteriStart" @add-project="addNewProject"></project>
+        </div>
+      </div>
+    </div>
+
+    <div class="container pt-2 pb-2 mt-2 mb-2">
+      <button type="submit" class="btn btn-sm btn-danger" @click="changeMostra">
+        Progetti
+        <strong v-if="mostra == false">+</strong>
+        <strong v-else>-</strong>
+      </button>
+      <button type="submit" class="btn btn-sm btn-info ml-2" @click="getCriteri">
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Calcola Classifica
+      </button>
+      <button type="submit" class="btn btn-sm btn-warning ml-2" @click="changemostraCLassifica">
+        Classifica
+        <strong v-if="mostraCLassifica == false">+</strong>
+        <strong v-else>-</strong>
+      </button>
+    </div>
+    <hr>
 
     <div class="container" v-if="mostra">
-      <hr>
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
     </div>
+    <hr v-if="mostra">
 
     <div class="container" v-if="mostraCLassifica">
-      <hr>
       <ranking :ranking="ranking" @svuota-ranking="svuotaRanking"></ranking>
+    </div>
+    <hr v-if="mostraCLassifica && ranking.length > 0">
+
+    <div class="container col-12">
+      <p>Sviluppata da Luca Marino</p>
+      <p>
+        <strong>Copyright © 2019 Luca Marino | 3885863788</strong>
+      </p>
     </div>
   </div>
 </template>
@@ -76,9 +115,15 @@ export default {
   name: "app",
   data() {
     return {
-      criteriStart: [],
+      criteriStart: [
+        // { nameCriterio: "Criterio 1", pesoCriterio: 0.3, tipoCriterio: "min" },
+        // { nameCriterio: "Criterio 2", pesoCriterio: 0.3, tipoCriterio: "min" },
+        // { nameCriterio: "Criterio 3", pesoCriterio: 0.4, tipoCriterio: "max" }
+      ],
       mostra: false,
       mostraCLassifica: false,
+      mostraInserimentoCriteri: false,
+      mostraInserimentoProgetti: false,
       ranking: [],
       projects: [
         {
@@ -203,6 +248,12 @@ export default {
     ciccio();
   },
   methods: {
+    changemostraInserimentoProgetti() {
+      return (this.mostraInserimentoProgetti = !this.mostraInserimentoProgetti);
+    },
+    changemostraInserimentoCriteri() {
+      return (this.mostraInserimentoCriteri = !this.mostraInserimentoCriteri);
+    },
     changemostraCLassifica() {
       return (this.mostraCLassifica = !this.mostraCLassifica);
     },
@@ -325,5 +376,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.btn:focus {
+  box-shadow: none !important;
 }
 </style>

@@ -7,9 +7,9 @@
       :project="project"
       style="float: left"
     >
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          {{project.nome}}
+      <div class="card bg-danger" style="width: 18rem; border: 1px solid black">
+        <div class="card-header text-white">
+          <strong>{{project.nome}}</strong>
           <button
             type="button"
             class="close no-outline"
@@ -24,6 +24,7 @@
             v-for="(criterio, index) in project.criteri"
             :key="index"
             :criterio="criterio"
+            style="border: 1px solid black"
           >
             {{criterio.nameCriterio}}
             &nbsp;
@@ -41,7 +42,7 @@
 
 <script>
 export default {
-  name: "ProjectCard",
+  name: 'ProjectCard',
   props: {
     projects: {
       type: Array,
@@ -49,11 +50,11 @@ export default {
     }
   },
   methods: {
-    removeProject(project) {
-      this.$emit("remove-project", project);
+    removeProject (project) {
+      this.$emit('remove-project', project)
     }
   }
-};
+}
 </script>
 
 <style>
@@ -61,5 +62,10 @@ export default {
   overflow: hidden;
   width: 912px;
   margin: 0 auto;
+}
+
+button:focus {
+  outline: 0 !important;
+  box-shadow: 0 !important;
 }
 </style>

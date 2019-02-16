@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div>
     <div class="alert alert-danger" role="alert" v-if="error">
-      <h3>{{ error }}</h3>
+      <span>{{ error }}</span>
     </div>
 
     <form @submit.prevent="submitProject" class="mt-2 mb-2">
@@ -27,22 +27,22 @@
           >{{criterio.valoreCriterio}}</span>&nbsp;
           <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>&nbsp;
           <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>&nbsp;
-          
+
           <button type="button" class="close no-outline" @click="removeCriterio(criterio)">
             <span>&times;</span>
           </button>
         </li>
       </ul>
-      <button type="submit" class="btn btn-sm btn-danger mt-2">Inserisci Progetto</button>
+      <button type="submit" class="btn btn-sm btn-danger mt-4">Inserisci Progetto</button>
     </form>
   </div>
 </template>
 
 <script>
-import Criterio from "@/components/Criterio";
+import Criterio from '@/components/Criterio'
 
 export default {
-  name: "Project",
+  name: 'Project',
   components: {
     Criterio
   },
@@ -56,40 +56,40 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       nome: null,
       error: null,
       criteri: []
-    };
+    }
   },
   methods: {
-    submitProject() {
+    submitProject () {
       if (this.nome && this.criteri.length > 0) {
-        this.$emit("add-project", {
+        this.$emit('add-project', {
           nome: this.nome,
           criteri: this.criteri
-        });
+        })
 
-        this.nome = null;
-        this.criteri = [];
+        this.nome = null
+        this.criteri = []
 
         if (this.error) {
-          this.error = null;
+          this.error = null
         }
       } else {
-        this.error = "Inserire il nome del progetto e almeno un criterio!";
+        this.error = 'Inserire il nome del progetto e almeno un criterio!'
       }
     },
-    addNewCriterio(new_criterio) {
-      console.log(new_criterio);
-      return this.criteri.push(new_criterio);
+    addNewCriterio (new_criterio) {
+      console.log(new_criterio)
+      return this.criteri.push(new_criterio)
     },
-    removeCriterio(criterio) {
-      return this.criteri.splice(this.criteri.indexOf(criterio), 1);
+    removeCriterio (criterio) {
+      return this.criteri.splice(this.criteri.indexOf(criterio), 1)
     }
   }
-};
+}
 </script>
 
 <style>

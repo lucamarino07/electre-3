@@ -3,14 +3,14 @@
     <form @submit.prevent="submitCriterio" class>
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 col-sm-6 col-12 mt-4">
+          <div class="col-lg-6 col-sm-6 col-6 mt-4">
             <label for="nameCriterio">
               <strong>Criterio</strong>
             </label>
             <input id="nameCriterio" type="text" class="form-control" v-model="nameCriterio">
           </div>
 
-          <div class="col-lg-2 col-sm-12 col-612 mt-4">
+          <div class="col-lg-2 col-sm-12 col-6 mt-4">
             <label for="pesoCriterio" class="text-primary">
               <strong>Peso</strong>
             </label>
@@ -20,10 +20,12 @@
               step="0.01"
               class="form-control"
               v-model="pesoCriterio"
+              min="0"
+              max="1"
             >
           </div>
 
-          <div class="col-lg-2 col-sm-6 col-md-6 mt-4">
+          <div class="col-lg-2 col-sm-6 col-6 mt-4">
             <label for="tipoCriterioProject" class="text-danger">
               <strong>Tipologia</strong>
             </label>
@@ -32,7 +34,7 @@
               <option>max</option>
             </select>
           </div>
-          <div class="col-lg-2 col-12 mt-4">
+          <div class="col-lg-2 col-6 mt-4">
             <label for="tipoCriterioProject">
               <strong>Inserisci</strong>
             </label>
@@ -64,7 +66,7 @@ export default {
   },
   methods: {
     submitCriterio() {
-      if (this.nameCriterio) {
+      if (this.nameCriterio && this.tipoCriterio && this.pesoCriterio) {
         this.$emit("add-criterio-vector", {
           nameCriterio: this.nameCriterio,
           pesoCriterio: this.pesoCriterio,
@@ -79,7 +81,7 @@ export default {
           this.error = null;
         }
       } else {
-        this.error = "Inserire il nome del criterio!";
+        this.error = "Compilare tutti i campi per proseguire!!";
       }
     }
   }
@@ -88,5 +90,3 @@ export default {
 
 <style>
 </style>
-
-
