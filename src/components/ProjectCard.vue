@@ -9,22 +9,22 @@
     >
       <div class="card bg-danger" style="width: 18rem; border: 1px solid black">
         <div class="card-header text-white">
-          <strong>{{project.nome}}</strong>
-          <button
-            type="button"
-            class="close no-outline"
-            @click="removeProject(project)"
-          >
+          <button type="button" class="btn no-outline text-white" @click="id = index">
+            <strong>{{project.nome}}</strong>
+          </button>
+          
+          <button type="button" class="close no-outline" @click="removeProject(project)">
             <span>&times;</span>
           </button>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush" v-if="id == index">
           <li
             class="list-group-item"
             v-for="(criterio, index) in project.criteri"
             :key="index"
             :criterio="criterio"
             style="border: 1px solid black"
+            
           >
             {{criterio.nameCriterio}}
             &nbsp;
@@ -42,19 +42,24 @@
 
 <script>
 export default {
-  name: 'ProjectCard',
+  name: "ProjectCard",
   props: {
     projects: {
       type: Array,
       required: true
     }
   },
+  data() {
+    return {
+      id: null,
+    }
+  },
   methods: {
-    removeProject (project) {
-      this.$emit('remove-project', project)
+    removeProject(project) {
+      this.$emit("remove-project", project);
     }
   }
-}
+};
 </script>
 
 <style>
