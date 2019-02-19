@@ -1,4 +1,4 @@
-<template>
+o<template>
   <div class="row justify-content-center">
     <div
       class="mx-2 my-2"
@@ -9,7 +9,7 @@
     >
       <div class="card bg-danger" style="width: 18rem; border: 1px solid black">
         <div class="card-header text-white">
-          <button type="button" class="btn no-outline text-white" @click="id = index">
+          <button type="button" class="btn no-outline text-white" @click="changeId(index)">
             <strong>{{project.nome}}</strong>
           </button>
           
@@ -24,14 +24,14 @@
             :key="index"
             :criterio="criterio"
             style="border: 1px solid black"
-            
           >
             {{criterio.nameCriterio}}
             &nbsp;
             <span
               class="badge badge-pill badge-success"
             >{{criterio.valoreCriterio}}</span>&nbsp;
-            <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>&nbsp;
+            <span class="badge badge-pill badge-primary">{{criterio.pesoCriterio}}</span>
+            &nbsp;
             <span class="badge badge-pill badge-danger">{{criterio.tipoCriterio}}</span>
           </li>
         </ul>
@@ -51,14 +51,23 @@ export default {
   },
   data() {
     return {
-      id: null,
-    }
+      id: null
+    };
   },
   methods: {
     removeProject(project) {
       this.$emit("remove-project", project);
+    },
+    changeId(index) {
+      if (this.id != null) {
+        if (this.id == index) {
+          this.id = null;
+        }
+      } else {
+        this.id = index;
+      }
     }
-  }
+ }
 };
 </script>
 

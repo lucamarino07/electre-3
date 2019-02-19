@@ -7,7 +7,7 @@
     <form @submit.prevent="submitProject" class="mt-2 mb-2">
       <div class="col-12">
         <label for="nameProject">
-          <strong>Nome Progetto</strong>
+          <strong>Nome Alternativa</strong>
         </label>
         <input id="nameProject" type="text" class="form-control" v-model="nome">
       </div>
@@ -33,7 +33,7 @@
           </button>
         </li>
       </ul>
-      <button type="submit" class="btn btn-sm btn-danger mt-4">Inserisci Progetto</button>
+      <button type="submit" class="btn btn-sm btn-danger mt-4">Inserisci Alternativa</button>
     </form>
   </div>
 </template>

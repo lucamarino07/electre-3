@@ -50,38 +50,45 @@
     <div class="container">
       <div class="card">
         <div class="card-header bg-danger">
-          <button type="button" class="btn no-outline" @click="changemostraInserimentoProgetti">
-            <strong v-if="mostraInserimentoProgetti == true" class="text-white">Chiudi</strong>
-            <strong v-else class="text-white">Inserisci Progetti</strong>
+          <button type="button" class="btn no-outline" @click="changemostraInserimentoAlternative">
+            <strong v-if="mostraInserimentoAlternative == true" class="text-white">Chiudi</strong>
+            <strong v-else class="text-white">Inserisci Alternative</strong>
           </button>
         </div>
-        <div class="card-body" v-if="mostraInserimentoProgetti">
+        <div class="card-body" v-if="mostraInserimentoAlternative">
           <project :projects="projects" :criteriStart="criteriStart" @add-project="addNewProject"></project>
         </div>
       </div>
     </div>
 
-    <div class="container pt-2 pb-2 mt-2 mb-2">
-      <button type="submit" class="btn btn-sm btn-danger" @click="changeMostra">
-        Progetti
-        <strong v-if="mostra == false">+</strong>
-        <strong v-else>-</strong>
-      </button>
-      <button type="submit" class="btn btn-sm btn-info ml-2" @click="getCriteri">
-        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Calcola Classifica
-      </button>
-      <button type="submit" class="btn btn-sm btn-warning ml-2" @click="changemostraCLassifica">
-        Classifica
-        <strong v-if="mostraCLassifica == false">+</strong>
-        <strong v-else>-</strong>
-      </button>
+    <div class="container mt-4 mb-2">
+      <div class="row">
+        <div class="col-lg-4 col-4">
+          <button type="submit" class="btn btn-sm btn-danger" @click="changeMostra">
+            <span v-if="mostra == false">Alternative</span>
+            <span v-else>Chiudi</span>
+          </button>
+        </div>
+        <div class="col-lg-4 col-4">
+          <button type="submit" class="btn btn-sm btn-info ml-2" @click="getCriteri">
+            <span>Calcola</span>
+          </button>
+        </div>
+        <div class="col-lg-4 col-4">
+          <button type="submit" class="btn btn-sm btn-warning ml-2" @click="() => {changemostraCLassifica()}" >
+            
+            <span v-if="mostraCLassifica == false">Classifica</span>
+            <span v-else>Chiudi</span>
+          </button>
+        </div>
+      </div>
     </div>
     <hr>
 
     <div class="container" v-if="mostra">
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
     </div>
-    <hr v-if="mostra">
+    <hr v-if="mostra && projects.length > 0">
 
     <div class="container" v-if="mostraCLassifica">
       <ranking :ranking="ranking" @svuota-ranking="svuotaRanking"></ranking>
@@ -123,7 +130,7 @@ export default {
       mostra: false,
       mostraCLassifica: false,
       mostraInserimentoCriteri: false,
-      mostraInserimentoProgetti: false,
+      mostraInserimentoAlternative: false,
       ranking: [],
       projects: [
         {
@@ -248,8 +255,9 @@ export default {
     ciccio();
   },
   methods: {
-    changemostraInserimentoProgetti() {
-      return (this.mostraInserimentoProgetti = !this.mostraInserimentoProgetti);
+    changemostraInserimentoAlternative() {
+      return (this.mostraInserimentoAlternative = !this
+        .mostraInserimentoAlternative);
     },
     changemostraInserimentoCriteri() {
       return (this.mostraInserimentoCriteri = !this.mostraInserimentoCriteri);
@@ -349,6 +357,7 @@ export default {
         };
         this.ranking.push(obj);
       }
+      (this.mostra = false)
       return (this.mostraCLassifica = true);
     },
     addCriterioVector(criterio) {
