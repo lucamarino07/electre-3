@@ -94,7 +94,7 @@ export default {
       }
     },
     addNewCriterio (new_criterio) {
-      console.log(new_criterio)
+      // console.log(new_criterio)
       return this.criteri.push(new_criterio)
     },
     removeCriterio (criterio) {
