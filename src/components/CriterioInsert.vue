@@ -2,6 +2,13 @@
   <div>
     <form @submit.prevent="submitCriterio" class>
       <div class="container">
+        <div
+          class="alert alert-danger alert-dismissible fade show row justify-content-center"
+          role="alert"
+          v-if="errorPeso"
+        >
+          <strong>{{errorPeso}}</strong>
+        </div>
         <div class="row">
           <div class="col-lg-6 col-sm-6 col-6 mt-4">
             <label for="nameCriterio">
@@ -61,12 +68,25 @@ export default {
       nameCriterio: null,
       pesoCriterio: null,
       tipoCriterio: null,
-      error: null
+      error: null,
+      pesoSomma: 0,
+      errorPeso: null
     };
+  },
+  watch: {
+    pesoCriterio(newQuestion, oldQuestion) {
+      var somma = this.pesoSomma + parseFloat(newQuestion);
+      if (somma > 1) {
+        this.errorPeso = `La somma dei pesi deve essere 1! Il valore ${newQuestion} è troppo grande`;
+      } else {
+        this.errorPeso = null;
+      }
+    }
   },
   methods: {
     submitCriterio() {
       if (this.nameCriterio && this.tipoCriterio && this.pesoCriterio) {
+        this.pesoSomma = this.pesoSomma + parseFloat(this.pesoCriterio);
         this.$emit("add-criterio-vector", {
           nameCriterio: this.nameCriterio,
           pesoCriterio: this.pesoCriterio,
