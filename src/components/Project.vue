@@ -12,7 +12,7 @@
         <input id="nameProject" type="text" class="form-control" v-model="nome">
       </div>
 
-      <criterio @add-criterio="addNewCriterio" :criteriStart = "criteriStart"></criterio>
+      <criterio @add-criterio="addNewCriterio" :criteriStart = "criteriStart" :disabledCriterio = "disabledCriterio"></criterio>
       <ul class="list-group list-group-flush">
         <li
           class="list-group-item"
@@ -60,9 +60,19 @@ export default {
     return {
       nome: null,
       error: null,
-      criteri: []
+      criteri: [],
+      disabledCriterio: true
     }
   },
+    watch: {
+    nome(newQuestion, oldQuestion) {
+      if (newQuestion.length > 0) {
+        this.disabledCriterio = false
+      } else {
+        this.disabledCriterio = true
+      }
+    }
+    },
   methods: {
     submitProject () {
       if (this.nome && this.criteri.length > 0) {
@@ -73,6 +83,8 @@ export default {
 
         this.nome = null
         this.criteri = []
+
+        this.disabledCriterio = true
 
         if (this.error) {
           this.error = null

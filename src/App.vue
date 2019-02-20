@@ -75,8 +75,11 @@
           </button>
         </div>
         <div class="col-lg-4 col-4">
-          <button type="submit" class="btn btn-sm btn-warning ml-2" @click="() => {changemostraCLassifica()}" >
-            
+          <button
+            type="submit"
+            class="btn btn-sm btn-warning ml-2"
+            @click="() => {changemostraCLassifica()}"
+          >
             <span v-if="mostraCLassifica == false">Classifica</span>
             <span v-else>Chiudi</span>
           </button>
@@ -256,17 +259,24 @@ export default {
   },
   methods: {
     changemostraInserimentoAlternative() {
-      return (this.mostraInserimentoAlternative = !this
-        .mostraInserimentoAlternative);
+      this.mostraInserimentoAlternative = !this.mostraInserimentoAlternative;
+      this.mostraInserimentoCriteri = false;
+      return;
     },
     changemostraInserimentoCriteri() {
-      return (this.mostraInserimentoCriteri = !this.mostraInserimentoCriteri);
+      this.mostraInserimentoCriteri = !this.mostraInserimentoCriteri;
+      this.mostraInserimentoAlternative = false;
+      return;
     },
     changemostraCLassifica() {
-      return (this.mostraCLassifica = !this.mostraCLassifica);
+      this.mostraCLassifica = !this.mostraCLassifica;
+      this.mostraInserimentoAlternative = false;
+      return
     },
     changeMostra() {
-      return (this.mostra = !this.mostra);
+      this.mostra = !this.mostra;
+      this.mostraInserimentoAlternative = false;
+      return
     },
     svuotaRanking() {
       this.ranking = [];
@@ -357,7 +367,8 @@ export default {
         };
         this.ranking.push(obj);
       }
-      (this.mostra = false)
+      this.mostra = false;
+      this.mostraInserimentoAlternative = false;
       return (this.mostraCLassifica = true);
     },
     addCriterioVector(criterio) {

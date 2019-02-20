@@ -29,6 +29,7 @@
               v-model="pesoCriterio"
               min="0"
               max="1"
+              :disabled="disabledPeso"
             >
           </div>
 
@@ -36,17 +37,22 @@
             <label for="tipoCriterioProject" class="text-danger">
               <strong>Tipologia</strong>
             </label>
-            <select id="tipoCriterioProject" class="form-control" v-model="tipoCriterio">
+            <select
+              id="tipoCriterioProject"
+              class="form-control"
+              v-model="tipoCriterio"
+              :disabled="disabledTipologia"
+            >
               <option>min</option>
               <option>max</option>
             </select>
           </div>
           <div class="col-lg-2 col-6 mt-4">
             <label for="tipoCriterioProject">
-              <strong>Inserisci</strong>
+              <strong class="text-white">Inserisci</strong>
             </label>
             <br>
-            <button type="submit" class="btn btn-sm btn-success">+</button>
+            <button type="submit" class="btn btn-sm btn-success" :disabled="disableInserisci">+</button>
 
             <!-- <input id="tipoCriterioProject" type="text" class="form-control" v-model="tipoCriterio"> -->
           </div>
@@ -70,7 +76,10 @@ export default {
       tipoCriterio: null,
       error: null,
       pesoSomma: 0,
-      errorPeso: null
+      errorPeso: null,
+      disabledPeso: true,
+      disabledTipologia: true,
+      disableInserisci: true
     };
   },
   watch: {
@@ -80,6 +89,17 @@ export default {
         this.errorPeso = `La somma dei pesi deve essere 1! Il valore ${newQuestion} è troppo grande`;
       } else {
         this.errorPeso = null;
+      }
+    },
+    nameCriterio(newQuestion, oldQuestion) {
+      if (newQuestion.length > 0) {
+        this.disabledPeso = false;
+        this.disabledTipologia = false;
+        this.disableInserisci = false;
+      } else {
+        this.disabledPeso = true;
+        this.disabledTipologia = true;
+        this.disableInserisci = true;
       }
     }
   },
@@ -96,6 +116,10 @@ export default {
         this.nameCriterio = null;
         this.pesoCriterio = null;
         this.tipoCriterio = null;
+
+        this.disabledPeso = true;
+        this.disabledTipologia = true;
+        this.disableInserisci = true;
 
         if (this.error) {
           this.error = null;

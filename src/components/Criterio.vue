@@ -7,7 +7,7 @@
             <label for="nameCriterio">
               <strong>Criterio</strong>
             </label>
-            <select id="nameCriterio" class="form-control" v-model="nameCriterio">
+            <select id="nameCriterio" class="form-control" v-model="nameCriterio" :disabled="disabledCriterio">
               <option
                 v-for="(criterioStart, index) in criteriStart"
                 :key="index"
@@ -24,6 +24,7 @@
               step="0.01"
               class="form-control"
               v-model="valoreCriterio"
+              :disabled="disabledValore"
             >
           </div>
           <div class="col-lg-2 col-sm-6 col-4 mt-4">
@@ -38,6 +39,7 @@
               v-model="pesoCriterio"
               min="0"
               max="1"
+              readonly
             >
           </div>
 
@@ -45,17 +47,17 @@
             <label for="tipoCriterioProject" class="text-danger">
               <strong>Tipologia</strong>
             </label>
-            <select id="tipoCriterioProject" class="form-control" v-model="tipoCriterio">
+            <select id="tipoCriterioProject" class="form-control" v-model="tipoCriterio" readonly>
               <option>min</option>
               <option>max</option>
             </select>
           </div>
           <div class="col-lg-2 col-4 mt-4">
             <label for="tipoCriterioProject">
-              <strong>Inserisci</strong>
+              <strong class="text-white">Inserisci</strong>
             </label>
             <br>
-            <button type="submit" class="btn btn-sm btn-success">+</button>
+            <button type="submit" class="btn btn-sm btn-success" :disabled="disabledInserisci">+</button>
 
             <!-- <input id="tipoCriterioProject" type="text" class="form-control" v-model="tipoCriterio"> -->
           </div>
@@ -76,6 +78,10 @@ export default {
     criteriStart: {
       type: Array,
       required: true
+    },
+    disabledCriterio: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -84,7 +90,9 @@ export default {
       pesoCriterio: null,
       tipoCriterio: null,
       valoreCriterio: null,
-      error: null
+      disabledValore: true,
+      error: null,
+      disabledInserisci: true
     };
   },
   mounted() {
@@ -99,6 +107,15 @@ export default {
       this.tipoCriterio = this.criteriStart.find(
         obj => obj.nameCriterio === newQuestion
       ).tipoCriterio;
+
+       if (newQuestion.length > 0) {
+        this.disabledValore = false
+        this.disabledInserisci = false
+      } else {
+        this.disabledValore = true
+        this.disabledInserisci = true
+      }
+
     }
   },
   methods: {
@@ -115,6 +132,9 @@ export default {
         this.valoreCriterio = null;
         this.pesoCriterio = null;
         this.tipoCriterio = null;
+
+        this.disabledInserisci = true;
+        this.disabledValore = true;
 
         if (this.error) {
           this.error = null;
