@@ -1,4 +1,4 @@
-o<template>
+<template>
   <div class="row justify-content-center">
     <div
       class="mx-2 my-2"
@@ -17,7 +17,7 @@ o<template>
             <span>&times;</span>
           </button>
         </div>
-        <ul class="list-group list-group-flush" v-if="id == index">
+        <ul class="list-group list-group-flush" v-if="id == index"> 
           <li
             class="list-group-item"
             v-for="(criterio, index) in project.criteri"
@@ -62,6 +62,8 @@ export default {
       if (this.id != null) {
         if (this.id == index) {
           this.id = null;
+        } else {
+          this.id = index;
         }
       } else {
         this.id = index;
