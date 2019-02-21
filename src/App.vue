@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <h1 class="title">TOPSIS (Demo - Chart Feature)</h1> 
+      <h1 class="title">TOPSIS (Demo - Chart Feature)</h1>
       <p>Inserisci i tuoi criteri e le alternative da valutare! L'algoritmo seleziona per te la migliore alternativa!</p>
       <p>(Vi sono già 5 alternative di partenza, puoi usarle per testare l'algoritmo o cancellarle ed inserire le tue)</p>
     </div>
@@ -98,6 +98,47 @@
     </div>
     <hr v-if="mostraCLassifica && ranking.length > 0">
 
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <graph-line
+            :width="600"
+            :height="400"
+            :shape="'normal'"
+            :axis-min="0"
+            :axis-max="8"
+            :axis-full-mode="true"
+            :labels="[ 'Primo', 'Secondo', 'Terzo']"
+            :names="names"
+            :values="values"
+          >
+            <note :text="'Profilo dei progetti'"></note>
+            <tooltip :names="names" :position="'right'"></tooltip>
+            <legends :names="names"></legends>
+            <guideline :tooltip-y="true"></guideline>
+          </graph-line>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="container">
+      <vue-frappe
+        id="test"
+        :labels="[
+                '12am-3am', '3am-6am', '6am-9am', '9am-12pm',
+                '12pm-3pm', '3pm-6pm', '6pm-9pm', '9pm-12am'
+            ]"
+        title="My Awesome Chart"
+        type="axis-mixed"
+        :height="300"
+        :colors="['purple', '#ffa3ef', 'light-blue']"
+        :dataSets="this.data"
+      ></vue-frappe>
+    </div>
+
+    <hr>
+
     <div class="container col-12">
       <p>Sviluppata da Luca Marino</p>
       <p>
@@ -123,8 +164,37 @@ import * as math from "mathjs";
 
 export default {
   name: "app",
+  computed: {
+    values: function() {
+      return creaMatriceCriteri(this.projects);
+    }
+  },
   data() {
     return {
+      data: [
+        {
+          name: "Some Data",
+          chartType: "line",
+          values: [25, 40, 30, 35, 8, 52, 17, -4]
+        },
+        {
+          name: "Another Set",
+          chartType: "line",
+          values: [25, 50, -10, 15, 18, 32, 27, 14]
+        },
+        {
+          name: "Yet Another",
+          chartType: "line",
+          values: [15, 20, -3, -15, 58, 12, -17, 37]
+        }
+      ],
+      names: [
+        "Progetto 1",
+        "Progetto 2",
+        "Progetto 3",
+        "Progetto 4",
+        "Progetto 5"
+      ],
       criteriStart: [
         // { nameCriterio: "Criterio 1", pesoCriterio: 0.3, tipoCriterio: "min" },
         // { nameCriterio: "Criterio 2", pesoCriterio: 0.3, tipoCriterio: "min" },
@@ -271,12 +341,12 @@ export default {
     changemostraCLassifica() {
       this.mostraCLassifica = !this.mostraCLassifica;
       this.mostraInserimentoAlternative = false;
-      return
+      return;
     },
     changeMostra() {
       this.mostra = !this.mostra;
       this.mostraInserimentoAlternative = false;
-      return
+      return;
     },
     svuotaRanking() {
       this.ranking = [];
