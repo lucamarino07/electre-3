@@ -97,45 +97,17 @@
       <ranking :ranking="ranking" @svuota-ranking="svuotaRanking"></ranking>
     </div>
     <hr v-if="mostraCLassifica && ranking.length > 0">
-
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <graph-line
-            :width="600"
-            :height="400"
-            :shape="'normal'"
-            :axis-min="0"
-            :axis-max="8"
-            :axis-full-mode="true"
-            :labels="[ 'Primo', 'Secondo', 'Terzo']"
-            :names="names"
-            :values="values"
-          >
-            <note :text="'Profilo dei progetti'"></note>
-            <tooltip :names="names" :position="'right'"></tooltip>
-            <legends :names="names"></legends>
-            <guideline :tooltip-y="true"></guideline>
-          </graph-line>
-        </div>
-      </div>
-    </div>
-
-    <hr>
-    <div class="container">
+    <!-- <div class="container"> -->
       <vue-frappe
         id="test"
-        :labels="[
-                '12am-3am', '3am-6am', '6am-9am', '9am-12pm',
-                '12pm-3pm', '3pm-6pm', '6pm-9pm', '9pm-12am'
-            ]"
-        title="My Awesome Chart"
+        :labels="['Primo', 'Secondo', 'Terzo']"
+        title="Profilo delle alternative"
         type="axis-mixed"
-        :height="300"
-        :colors="['purple', '#ffa3ef', 'light-blue']"
-        :dataSets="this.data"
+        :height="400"
+        
+        :dataSets="data"
       ></vue-frappe>
-    </div>
+    <!-- </div> -->
 
     <hr>
 
@@ -173,19 +145,29 @@ export default {
     return {
       data: [
         {
-          name: "Some Data",
+          name: "Progetto 1",
           chartType: "line",
-          values: [25, 40, 30, 35, 8, 52, 17, -4]
+          values: [6, 5, 6]
         },
         {
-          name: "Another Set",
+          name: "Progetto 2",
           chartType: "line",
-          values: [25, 50, -10, 15, 18, 32, 27, 14]
+          values: [7, 5, 4]
         },
         {
-          name: "Yet Another",
+          name: "Progetto 3",
           chartType: "line",
-          values: [15, 20, -3, -15, 58, 12, -17, 37]
+          values: [6, 5,4]
+        },
+                {
+          name: "Progetto 4",
+          chartType: "line",
+          values: [4, 6,4]
+        },
+                {
+          name: "Progetto 5",
+          chartType: "line",
+          values: [7, 8,7]
         }
       ],
       names: [
