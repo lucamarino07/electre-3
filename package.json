@@ -9,9 +9,15 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.11",
+    "echarts": "^4.1.0",
     "mathjs": "^5.4.2",
+    "v-chartist": "^0.1.6",
+    "v-charts": "^1.19.0",
     "vue": "^2.5.22",
-    "vue-persistent-state": "^0.2.1"
+    "vue-chartist": "^2.2.0",
+    "vue-graph": "^0.8.2",
+    "vue-persistent-state": "^0.2.1",
+    "vue2-frappe": "^1.0.28"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
