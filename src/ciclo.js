@@ -1,125 +1,6 @@
-
 import math from 'mathjs'
 
-const projects = [
-  {
-    nome: 'Progetto 1',
-    criteri: [
-      {
-        nameCriterio: 'Criterio 1',
-        valoreCriterio: 6,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 2',
-        valoreCriterio: 5,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 3',
-        valoreCriterio: 6,
-        pesoCriterio: 0.4,
-        tipoCriterio: 'max'
-      }
-    ]
-  },
-  {
-    nome: 'Progetto 2',
-    criteri: [
-      {
-        nameCriterio: 'Criterio 1',
-        valoreCriterio: 7,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 2',
-        valoreCriterio: 5,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 3',
-        valoreCriterio: 4,
-        pesoCriterio: 0.4,
-        tipoCriterio: 'max'
-      }
-    ]
-  },
-  {
-    nome: 'Progetto 3',
-    criteri: [
-      {
-        nameCriterio: 'Criterio 1',
-        valoreCriterio: 6,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 2',
-        valoreCriterio: 5,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 3',
-        valoreCriterio: 4,
-        pesoCriterio: 0.4,
-        tipoCriterio: 'max'
-      }
-    ]
-  },
-  {
-    nome: 'Progetto 4',
-    criteri: [
-      {
-        nameCriterio: 'Criterio 1',
-        valoreCriterio: 4,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 2',
-        valoreCriterio: 6,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 3',
-        valoreCriterio: 4,
-        pesoCriterio: 0.4,
-        tipoCriterio: 'max'
-      }
-    ]
-  },
-  {
-    nome: 'Progetto 5',
-    criteri: [
-      {
-        nameCriterio: 'Criterio 1',
-        valoreCriterio: 7,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 2',
-        valoreCriterio: 8,
-        pesoCriterio: 0.3,
-        tipoCriterio: 'min'
-      },
-      {
-        nameCriterio: 'Criterio 3',
-        valoreCriterio: 7,
-        pesoCriterio: 0.4,
-        tipoCriterio: 'max'
-      }
-    ]
-  }
-]
-
-function getCriteriValue (projects) {
+function getCriteriValue(projects) {
   var valori = []
   for (var i in projects) {
     for (var j in projects[i]) {
@@ -134,7 +15,7 @@ function getCriteriValue (projects) {
   return valori
 }
 
-function creaMatriceCriteri (projects) {
+function creaMatriceCriteri(projects) {
   var valori = getCriteriValue(projects)
   var matrix = []
   var index = 0
@@ -148,7 +29,7 @@ function creaMatriceCriteri (projects) {
   return matrix
 }
 
-function getCriteriPesi (projects) {
+function getCriteriPesi(projects) {
   var pesi = []
   for (var i in projects) {
     for (var j in projects[i]) {
@@ -163,7 +44,7 @@ function getCriteriPesi (projects) {
   return pesi
 }
 
-function creaMatricePesi (projects) {
+function creaMatricePesi(projects) {
   var pesi = getCriteriPesi(projects)
   var matrix = []
   var index = 0
@@ -181,7 +62,7 @@ function creaMatricePesi (projects) {
 // matrix = creaMatriceCriteri(projects);
 // console.log((matrix));
 
-function getCriteriTipo (projects) {
+function getCriteriTipo(projects) {
   var tipi = []
   for (var i in projects) {
     for (var j in projects[i]) {
@@ -196,7 +77,7 @@ function getCriteriTipo (projects) {
   return tipi
 }
 
-function creaMatriceTipo (projects) {
+function creaMatriceTipo(projects) {
   var tipi = getCriteriTipo(projects)
   var matrix = []
   var index = 0
@@ -210,9 +91,46 @@ function creaMatriceTipo (projects) {
   return matrix
 }
 
-function ciccio () {
-  console.log(math)
+
+
+function creaChartData(projects, matrice) {
+  var chartData = {columns:['Criterio'], rows:[]}
+  for (var i in projects) {  
+    chartData.columns.push(projects[i]['nome'])
+  }
+  var matrice_transpose = math.transpose(matrice);
+
+  for (var i = 0; i < matrice_transpose.length; i++) {
+    var row = {'Criterio': projects[0]['criteri'][i]['nameCriterio']}
+    for (var j in matrice_transpose[i]) {
+      var k = parseInt(j) + 1;
+      row[chartData.columns[k]] = matrice_transpose[i][j]
+    }
+    chartData.rows.push(row);
+  }
+  console.log(chartData);
+  return chartData
+
 }
+
 // console.log(creaMatriceTipo(projects))
 
-export { creaMatriceCriteri, creaMatricePesi, creaMatriceTipo, ciccio }
+
+function creaMatriceGrafico(projects) {
+  var data = [];
+  for (var i in projects) {  
+    var project = {name: null, values:[]};
+    project['name'] = projects[i]['nome'] 
+    for (var j in projects[i]) {
+      if (j == 'criteri') {
+        for (var k in projects[i][j]) {
+          project['values'].push(projects[i][j][k]["valoreCriterio"]);
+        }
+      }
+    }
+    data.push(project);
+  }
+  return data;
+}
+
+export { creaMatriceCriteri, creaMatricePesi, creaMatriceTipo, creaMatriceGrafico, creaChartData }
