@@ -87,7 +87,6 @@
       </div>
     </div>
     <hr>
-
     <div class="container" v-if="mostra">
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
     </div>
@@ -98,18 +97,10 @@
     </div>
     <hr v-if="mostraCLassifica && ranking.length > 0">
     <div class="container col-12">
-      <!-- <vue-frappe
-        id="test"
-        :labels="['Primo', 'Secondo', 'Terzo']"
-        title="Profilo Delle Alternative"
-        type="line"
-        :height="400"
+     
+          <ve-line :data="chartData" :settings="chartSettings"></ve-line>
         
-        :dataSets="this.dataset"
-      ></vue-frappe> -->
-      <ve-line :data="chartData"></ve-line>
     </div>
-    
 
     <hr>
 
@@ -127,7 +118,7 @@ import Project from "@/components/Project";
 import ProjectCard from "@/components/ProjectCard";
 import Ranking from "@/components/Ranking";
 import CriterioInsert from "@/components/CriterioInsert";
-import VeLine from 'v-charts/lib/line.common';
+import VeLine from "v-charts/lib/line.common";
 
 import {
   creaMatriceCriteri,
@@ -135,7 +126,8 @@ import {
   creaMatriceTipo,
   ciccio,
   creaMatriceGrafico,
-  creaChartData
+  creaChartData,
+  creaChartSettings
 } from "./ciclo.js";
 import * as math from "mathjs";
 
@@ -144,18 +136,16 @@ export default {
   computed: {
     chartData: function() {
       return creaChartData(this.projects, creaMatriceCriteri(this.projects));
+    },
+    chartSettings: function() {
+      return creaChartSettings(this.projects);
     }
+    // minCriterio: function() {
+    //   return ((math.min(creaMatriceCriteri(this.projects))));
+    // }
   },
   data() {
     return {
-      // chartData: {
-      //   columns: ['Criterio', 'Progetto 1', 'Progetto 2', 'Progetto 3', 'Progetto 4', 'Progetto 5'],
-      //     rows: [
-      //       { 'Criterio': 'Primo', 'Progetto 1': 6, 'Progetto 2': 7, 'Progetto 3': 6, 'Progetto 4': 4, 'Progetto 5': 7},
-      //       { 'Criterio': 'Secondo', 'Progetto 1': 5, 'Progetto 2': 5, 'Progetto 3': 5, 'Progetto 4': 6, 'Progetto 5': 8},
-      //       { 'Criterio': 'Terzo', 'Progetto 1': 6,'Progetto 2': 4, 'Progetto 3': 4, 'Progetto 4': 4, 'Progetto 5': 7},
-      //     ]
-      // },
       criteriStart: [
         // { nameCriterio: "Criterio 1", pesoCriterio: 0.3, tipoCriterio: "min" },
         // { nameCriterio: "Criterio 2", pesoCriterio: 0.3, tipoCriterio: "min" },
@@ -285,9 +275,7 @@ export default {
       ]
     };
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     changemostraInserimentoAlternative() {
       this.mostraInserimentoAlternative = !this.mostraInserimentoAlternative;

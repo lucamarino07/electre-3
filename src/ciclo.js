@@ -94,23 +94,34 @@ function creaMatriceTipo(projects) {
 
 
 function creaChartData(projects, matrice) {
-  var chartData = {columns:['Criterio'], rows:[]}
-  for (var i in projects) {  
+  var chartData = { columns: ['Criterio'], rows: [] }
+  for (var i in projects) {
     chartData.columns.push(projects[i]['nome'])
   }
   var matrice_transpose = math.transpose(matrice);
 
   for (var i = 0; i < matrice_transpose.length; i++) {
-    var row = {'Criterio': projects[0]['criteri'][i]['nameCriterio']}
+    var row = { 'Criterio': projects[0]['criteri'][i]['nameCriterio'] }
     for (var j in matrice_transpose[i]) {
       var k = parseInt(j) + 1;
       row[chartData.columns[k]] = matrice_transpose[i][j]
     }
     chartData.rows.push(row);
   }
-  console.log(chartData);
   return chartData
 
+}
+
+function creaChartSettings(projects) {
+  var chartSettings = {};
+  var min = [];
+  if (projects.length > 0) {
+    min.push(math.min(creaMatriceCriteri(projects)));
+  } else {
+    min.push(0);
+  }
+  chartSettings.min = min;
+  return chartSettings
 }
 
 // console.log(creaMatriceTipo(projects))
@@ -118,9 +129,9 @@ function creaChartData(projects, matrice) {
 
 function creaMatriceGrafico(projects) {
   var data = [];
-  for (var i in projects) {  
-    var project = {name: null, values:[]};
-    project['name'] = projects[i]['nome'] 
+  for (var i in projects) {
+    var project = { name: null, values: [] };
+    project['name'] = projects[i]['nome']
     for (var j in projects[i]) {
       if (j == 'criteri') {
         for (var k in projects[i][j]) {
@@ -133,4 +144,4 @@ function creaMatriceGrafico(projects) {
   return data;
 }
 
-export { creaMatriceCriteri, creaMatricePesi, creaMatriceTipo, creaMatriceGrafico, creaChartData }
+export { creaMatriceCriteri, creaMatricePesi, creaMatriceTipo, creaMatriceGrafico, creaChartData, creaChartSettings }
