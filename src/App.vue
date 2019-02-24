@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <h1 class="title">TOPSIS (Demo - Chart Feature)</h1>
+      <h1 class="title">TOPSIS</h1>
       <p>Inserisci i tuoi criteri e le alternative da valutare! L'algoritmo seleziona per te la migliore alternativa!</p>
       <p>(Vi sono già 5 alternative di partenza, puoi usarle per testare l'algoritmo o cancellarle ed inserire le tue)</p>
     </div>
