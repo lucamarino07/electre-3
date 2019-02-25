@@ -96,10 +96,12 @@
       <ranking :ranking="ranking" @svuota-ranking="svuotaRanking"></ranking>
     </div>
     <hr v-if="mostraCLassifica && ranking.length > 0">
-    <div class="container col-12">
-     
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
           <ve-line :data="chartData" :settings="chartSettings"></ve-line>
-        
+        </div>
+      </div>
     </div>
 
     <hr>
