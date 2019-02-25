@@ -87,7 +87,7 @@
       </div>
     </div>
     <hr>
-    <div class="container" v-if="mostra">
+    <div class="container" v-if="mostra && projects.length > 0">
       <project-card :projects="projects" @remove-project="removeProject"></project-card>
     </div>
     <hr v-if="mostra && projects.length > 0">
@@ -96,15 +96,17 @@
       <ranking :ranking="ranking" @svuota-ranking="svuotaRanking"></ranking>
     </div>
     <hr v-if="mostraCLassifica && ranking.length > 0">
-    <div class="container">
+
+    <div class="container" v-if="mostraGrafico && projects.length > 0">
       <div class="row">
         <div class="col-12">
+          <h3 class="mb-4 mt-2">Profilo delle Alternative</h3>
           <ve-line :data="chartData" :settings="chartSettings"></ve-line>
         </div>
       </div>
     </div>
 
-    <hr>
+    <hr v-if="mostraGrafico && projects.length > 0">
 
     <div class="container col-12">
       <p>Sviluppata da Luca Marino</p>
@@ -153,6 +155,7 @@ export default {
         // { nameCriterio: "Criterio 2", pesoCriterio: 0.3, tipoCriterio: "min" },
         // { nameCriterio: "Criterio 3", pesoCriterio: 0.4, tipoCriterio: "max" }
       ],
+      mostraGrafico: false,
       mostra: false,
       mostraCLassifica: false,
       mostraInserimentoCriteri: false,
@@ -297,6 +300,7 @@ export default {
     changeMostra() {
       this.mostra = !this.mostra;
       this.mostraInserimentoAlternative = false;
+      this.mostraGrafico = !this.mostraGrafico;
       return;
     },
     svuotaRanking() {
