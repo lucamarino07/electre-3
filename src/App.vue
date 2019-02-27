@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <Slide>
+      <a id="home" href="#" style="text-decoration: none">
+        <span>Home</span>
+      </a>
+       <a id="home" href="/h" style="text-decoration: none">
+        <span>Topsis</span>
+      </a>
+    </Slide>
     <div class="container">
       <h1 class="title">TOPSIS</h1>
       <p>Inserisci i tuoi criteri e le alternative da valutare! L'algoritmo seleziona per te la migliore alternativa!</p>
@@ -134,6 +142,7 @@ import {
   creaChartSettings
 } from "./ciclo.js";
 import * as math from "mathjs";
+import { Slide } from 'vue-burger-menu';
 
 export default {
   name: "app",
@@ -394,6 +403,7 @@ export default {
       }
       this.mostra = false;
       this.mostraInserimentoAlternative = false;
+      this.mostraGrafico = false;
       return (this.mostraCLassifica = true);
     },
     addCriterioVector(criterio) {
@@ -409,7 +419,8 @@ export default {
     ProjectCard,
     Ranking,
     CriterioInsert,
-    VeLine
+    VeLine,
+    Slide
   }
 };
 </script>
@@ -426,5 +437,10 @@ export default {
 
 .btn:focus {
   box-shadow: none !important;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
 }
 </style>
