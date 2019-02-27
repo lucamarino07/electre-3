@@ -117,7 +117,7 @@
     <hr v-if="mostraGrafico && projects.length > 0">
 
     <div class="container col-12">
-      <p>Sviluppata da Luca Marino</p>
+      <p>Sviluppata da <a href="https://www.facebook.com/liuckmarino">Luca Marino</a></p>
       <p>
         <strong>Copyright © 2019 Luca Marino | 3885863788</strong>
       </p>
@@ -153,9 +153,6 @@ export default {
     chartSettings: function() {
       return creaChartSettings(this.projects);
     }
-    // minCriterio: function() {
-    //   return ((math.min(creaMatriceCriteri(this.projects))));
-    // }
   },
   data() {
     return {
@@ -410,7 +407,6 @@ export default {
       return this.criteriStart.push(criterio);
     },
     removeCriterioStart(criterio) {
-      // console.log(project);
       return this.criteriStart.splice(this.criteriStart.indexOf(criterio), 1);
     }
   },
